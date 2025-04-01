@@ -52,6 +52,42 @@ class ProductList extends HTMLElement {
             .product:hover {
                 transform: translateY(-5px);
             }
+
+            /* Responsive styles */
+            @media (max-width: 1024px) {
+                .product-list {
+                    grid-template-columns: repeat(3, 1fr); /* 3 sản phẩm trên một hàng */
+                }
+            }
+            @media (max-width: 768px) {
+                .product-list {
+                    grid-template-columns: repeat(2, 1fr); /* 2 sản phẩm trên một hàng */
+                }
+                .product h3 {
+                    font-size: 16px; /* Giảm kích thước font */
+                }
+                .product p {
+                    font-size: 14px; /* Giảm kích thước font */
+                }
+            }
+            @media (max-width: 480px) {
+                .product-list {
+                    grid-template-columns: 1fr; /* 1 sản phẩm trên một hàng */
+                }
+                .product {
+                    padding: 10px; /* Giảm padding */
+                }
+                .product h3 {
+                    font-size: 14px; /* Giảm kích thước font */
+                }
+                .product p {
+                    font-size: 12px; /* Giảm kích thước font */
+                }
+                .product button {
+                    font-size: 12px; /* Giảm kích thước font */
+                    padding: 8px 10px; /* Giảm padding của nút */
+                }
+            }
         `;
 
         const container = document.createElement("div");
