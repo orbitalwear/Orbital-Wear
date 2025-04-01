@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="components/header.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <shop-header></shop-header>
+
+    <!-- Checkout Section -->
+    <section class="checkout">
+        <h1>Thông tin thanh toán</h1>
+        <div id="checkoutCart"></div>
+        <form id="checkoutForm">
+            <div class="form-group">
+                <label for="name">Họ và tên:</label>
+                <input type="text" id="name" name="name" placeholder="Nhập họ và tên của bạn" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ giao hàng:</label>
+                <textarea id="address" name="address" rows="3" placeholder="Nhập địa chỉ giao hàng" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="payment">Phương thức thanh toán:</label>
+                <select id="payment" name="payment" required>
+                    <option value="" disabled selected>Chọn phương thức thanh toán</option>
+                    <option value="cod">Thanh toán khi nhận hàng (COD)</option>
+                    <option value="credit">Thẻ tín dụng</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+            <button type="submit" class="checkout-submit">Hoàn tất thanh toán</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <shop-footer></shop-footer>
+    <script src="components/footer.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            const checkoutCart = document.getElementById("checkoutCart");
+
+            if (cartItems.length === 0) {
+                checkoutCart.innerHTML = "<p>Giỏ hàng trống</p>";
+                return;
+            }
+
+            cartItems.forEach(item => {
+                const cartItem = document.createElement("div");
+                cartItem.classList.add("cart-item");
+                cartItem.innerHTML = `
+                    <p>${item.name} - ${item.price} x ${item.quantity}</p>
+                `;
+                checkoutCart.appendChild(cartItem);
+            });
+
+            // Xử lý sự kiện gửi form
+            const checkoutForm = document.getElementById("checkoutForm");
+            checkoutForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                alert("Thanh toán thành công! Cảm ơn bạn đã mua hàng.");
+                localStorage.removeItem("cartItems"); // Xóa giỏ hàng sau khi thanh toán
+                window.location.href = "index.html"; // Quay lại trang chủ
+            });
+        });
+    </script>
+</body>
+</html>
